@@ -17,7 +17,7 @@ logging.basicConfig(level=log_level)
 logger = logging.getLogger(__name__)
 
 
-class ObservableDict(dict):
+class ObservableDict[K, V](dict[K, V]):
     """Dict subclass that signals a threading.Event on every write."""
 
     def __init__(self, *args, **kwargs):

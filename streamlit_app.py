@@ -409,7 +409,7 @@ async def run_ingestion_pipeline() -> "None":
         logger.error(f"Ingestion pipeline failed: {e}", exc_info=True)
 
 
-def _render_exchange_response(state: "WorkflowState") -> "None":
+def _render_exchange_response(state: "WorkflowState | None") -> "None":
     """
     renders the agent response for a single exchange
     """
