@@ -2,6 +2,7 @@ import json
 from unittest.mock import Mock, patch
 
 from src.utils import (
+    ObservableDict,
     check_llama_stack_availability,
     clean_text,
     extract_mcp_output,
@@ -9,6 +10,28 @@ from src.utils import (
     route_to_next_node,
     support_route_to_next_node,
 )
+
+
+class TestObservableDict:
+    """
+    tests for ObservableDict class.
+    """
+
+    def test_subscripted_class_is_instantiable(self):
+        d = ObservableDict[str, dict]()
+        assert isinstance(d, ObservableDict)
+        assert isinstance(d, dict)
+
+    def test_update_event_not_set_after_construction(self):
+        d = ObservableDict(a={"x": 1})
+        assert d["a"] == {"x": 1}
+        assert d.update_event.is_set() is False
+
+    def test_setitem_sets_update_event(self):
+        d: "ObservableDict[str, dict]" = ObservableDict()
+        d["k"] = {"v": 1}
+        assert d["k"] == {"v": 1}
+        assert d.update_event.is_set() is True
 
 
 class TestCleanText:
